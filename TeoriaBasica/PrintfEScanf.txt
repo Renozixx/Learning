@@ -1,0 +1,9 @@
+Printf e scanf ->
+Ambos as funções da biblioteca <stdio.h> possuem alguns parametros como base, sendo o principal dele os placeholder.
+voce coloca os placeholders para mostrar para a sua função com qual tipo de dado ela está lidando, como exemplo
+scanf("%c"... Esse exemplo mostra um scanf que receberá como resposta um caractér unico
+%d -> int
+%ld -> LongInt
+%c -> Char
+%s -> String
+%f -> Float
