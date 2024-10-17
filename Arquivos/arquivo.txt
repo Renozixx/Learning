@@ -1,0 +1,1 @@
+A partir de agora usaremos arquivos para deixar de ter dados em RAM, para te-los no disco Rigido.
