@@ -1,0 +1,5 @@
+Arquivos -
+    Texto -
+        comandos ->
+        FILE *fp = fopen(nome_do_arquivo, "modo_de_abertura") 
+            Modos de abertura: "w" -> write | "r" -> read | "a" -> append | use o "a" para alterar/criar e o "r" para ler

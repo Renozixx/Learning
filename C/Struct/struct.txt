@@ -1,2 +1,3 @@
 Struct em C -
-Uma struct 
+Uma struct em C seria o equivalente a um Objeto nas outras linguagens, já que voce chama esse struct, e nela possuem
+Varias chaves, que podem ter valores atribuidos a elas.

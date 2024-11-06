@@ -14,9 +14,14 @@ int main(void) {
         fprintf(fp, "%d \n", k);
     }
 
-    for(i = 0; i < 3; i++){
-        fscanf(fp, "%d \n");
+    fclose(fp);
+
+    FILE *fp1 = fopen("./arquivosTeste/teste1.txt", "r");    
+    
+    while(fscanf(fp1, "%d ", &k) != EOF){
+        printf("%d \n", k);
     }
+
     fclose(fp);
     return 0;
 }
