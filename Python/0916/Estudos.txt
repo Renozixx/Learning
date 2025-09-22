@@ -1,0 +1,7 @@
+Eu vou usar esse TXT para esboçar meus estudos e conclusões
+
+É denominado como Rede neural um processo de machine learning que tenta imitar o Cerebro Humano, usando o processo de ML chamado de 
+Deep Learning, que utiliza nós conectados em uma estrutura de camada, e com base nesses nós os computadores utilizam de um sistema em camadas
+para apredizado, e adaptação de variaveis ou qualquer outra funcionalidade que a ele for atribuida, com base nesse resumo retirado do 
+AWS Learning, vamos discutir sobre Redes Neurais Feed-Forward:
+    Como pode ser visto no site oficial do Data Camp
