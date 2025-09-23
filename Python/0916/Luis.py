@@ -4,9 +4,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.inspection import permutation_importance
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers
+# from tensorflow.keras import layers
 import matplotlib.pyplot as plt
-from tensorflow.keras.callbacks import EarlyStopping
+from keras.callbacks import EarlyStopping
+# from tensorflow.keras.callbacks import EarlyStopping
 import os
 
 # Leitura do dataset
