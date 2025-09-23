@@ -2,12 +2,27 @@ Desafio 3 - Luis Felipe Ismael da Silva
 Vinicius Ribeiro Renó
 João Matheus Santana Ferreira
 
-Objetivo do Problema e Métrica Principal
+# Dataset
+O dataset escolhido para estudo foi o Walmart Sales dataset que estuda os dados de venda de uma das maiores redes do setor varejista
+dos estados unidos, onde nele veremos os seguintes dados: \
+Store: Store number \
+Date: Sales week start date \
+Weekly_Sales: Sales \
+Holiday_Flag: Mark on the presence or absence of a holiday \
+Temperature: Air temperature in the region \
+Fuel_Price: Fuel cost in the region \
+CPI: Consumer price index \
+Unemployment: Unemployment rate \
 
-Em nosso projeto, nós utilizamos o dataset "Walmart Sales"
-onde nosso principal objetivo era identificar a coluna 
-"Weekly Sales", ou seja, a venda semanal. 
+Este dataset é muito maior que outros já que ele possuí a característica de analizar 45 lojas em direntes datas.
+Com essa analise é possivel identificar quais padroes afetam as escolhas dos consumidores desse tipo de loja. \ \
 
-Decisões de Modelagem:
+Portanto, Objetivo: \
+Entender com base nos dados apresentados o que pode afetar nas vendas de uma loja do setor de varejo \
+Metrica Principal: Weakly Sales \
+Dataset Utilizado: https://www.kaggle.com/datasets/mikhail1681/walmart-sales
 
-Nós utilizamos uma arquitetatura com 1 entrada 
+Para utilização de uma rede neural feed foward, foi-se utilizado a bibliotecas keras com o metodo rn = keras.Sequential, onde nele é 
+introduzido a camada de entrada, a oculta, e a de saída, apos isso a nossa rede é compilada, porem para evitar overfiting foi se utilizado
+o Early stop que analiza se a variavel de perde se mantem por mais de 10 ciculos, indicando redundancia, logo em caso de exito ele quebra o 
+treinamento do código
