@@ -45,6 +45,7 @@ rn = keras.Sequential([
 # compilação da rede neural
 rn.compile(optimizer='adam', loss='mean_squared_error')
 
+# early stop para evitar o overfitting
 early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 # execução da rede neural
 result = rn.fit(
@@ -67,7 +68,7 @@ def imp_var(rn, X_teste, y_teste):
     )
     sorted_importances_idx = importancia.importances_mean.argsort()
     sorted_importances = pd.DataFrame(
-        importancia.importances[sorted_importances_idx].T,
+           importancia.importances[sorted_importances_idx].T,
         columns=X_teste.columns[sorted_importances_idx],
     )
     print(sorted_importances)
@@ -88,6 +89,9 @@ def Testar_rede(X_teste, y_teste, rn):
         diferenca = prev[i][0] - objetivo.iloc[i]
         print(f"Diferença: U${diferenca:,.2f}")
 
+Testar_rede(X_teste, y_teste, rn)
+imp_var(rn, X_teste, y_teste)
+
 # plotagem/gráfico
 plt.figure(figsize=(10, 6))
 plt.plot(result.history['loss'], label='Erro de Treino')
@@ -98,6 +102,3 @@ plt.ylabel('Erro Quadrático Médio (MSE)')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-Testar_rede(X_teste, y_teste, rn)
-imp_var(rn, X_teste, y_teste)
