@@ -1,0 +1,13 @@
+Desafio 3 - Luis Felipe Ismael da Silva
+Vinicius Ribeiro Renó
+João Matheus Santana Ferreira
+
+Objetivo do Problema e Métrica Principal
+
+Em nosso projeto, nós utilizamos o dataset "Walmart Sales"
+onde nosso principal objetivo era identificar a coluna 
+"Weekly Sales", ou seja, a venda semanal. 
+
+Decisões de Modelagem:
+
+Nós utilizamos uma arquitetatura com 1 entrada 
