@@ -63,7 +63,7 @@ print(r)
 
 def imp_var(rn, X_teste, y_teste):
     importancia = permutation_importance(
-        rn, X_teste, y_teste, n_repeats=10, random_state=42, n_jobs=1,
+        rn, X_teste, y_teste, n_repeats=10, random_state=42, n_jobs=-1,
         scoring='neg_mean_squared_error'
     )
     sorted_importances_idx = importancia.importances_mean.argsort()
