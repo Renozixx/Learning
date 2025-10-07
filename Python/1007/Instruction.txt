@@ -1,0 +1,17 @@
+1.Como funciona os algoritmos
+1.1.Texto e diagramas
+1.2.Fluxograma
+
+2.Explicar como se define o modelo
+2.1.Texto e diagramas
+
+3.Apresentar Resultados graficos dos testes do modelo
+
+Apresentação -
+    - Organização
+    - Clareza
+    - Mostrar Conhecimento
+
+Matheus: Estudar Plot e os Algoritmos
+Luís: Estudar ao algoritmos e funções
+Renozixx: Monstar a base do código e decidir as funções a utilizar
