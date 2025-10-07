@@ -14,4 +14,4 @@ Apresentação -
 
 Matheus: Estudar Plot e os Algoritmos
 Luís: Estudar ao algoritmos e funções
-Renozixx: Monstar a base do código e decidir as funções a utilizar
+Renozixx: Montar a base do código e decidir as funções a utilizar
