@@ -12,7 +12,7 @@ from keras.callbacks import EarlyStopping
 import os
 
 # Leitura do dataset
-ds = pd.read_csv('Walmart_Sales.csv')
+ds = pd.read_csv('/mnt/c/Faculdade/Estudos/Learning/Python/0916/Walmart_Sales.csv')
 
 # Separando as variaveis que queremos prever, e tratando nosso arquivo
 y = ds['Weekly_Sales']
@@ -103,4 +103,5 @@ plt.xlabel('Época')
 plt.ylabel('Erro Quadrático Médio (MSE)')
 plt.legend()
 plt.grid(True)
+plt.savefig("grafico_loss.png")
 plt.show()
