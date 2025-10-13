@@ -1,0 +1,14 @@
+1. Explicação do TXT
+{
+    Nesse estudo vou colocar os tópicos principais para que sejam analisados e para facilitar 
+    a escrita do relatório
+}
+2. Introdução
+{
+    Esse estudo abrange a execução de uma pipeline baseado em algorimtos de regressão de dados
+}
+
+5. Referencias
+{
+    https://aws.amazon.com/pt/what-is/linear-regression/
+}

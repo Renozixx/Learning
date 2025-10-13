@@ -6,12 +6,8 @@ from sklearn.feature_selection import SelectKBest, f_regression
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-import numpy as np
 
-# data = pd.read_csv('household_power_consumption.csv') # Luis
-data = pd.read_csv('Python\\1007\\household_power_consumption.csv', sep=';', index_col=None) # Vinicius
+data = pd.read_csv('Python\\1007\\household_power_consumption.csv', sep=';', index_col=None)
 
 print(data)
 
@@ -28,16 +24,15 @@ cols_object = [
     'Global_intensity',
     'Sub_metering_1',
     'Sub_metering_2',
-    'Sub_metering_3'
 ]
 
 for col in cols_object:
     data[col] = pd.to_numeric(data[col], errors='coerce')
 
-data['Global_active_power'] = data['Global_active_power'].fillna(data['Global_active_power'].mean())
 print(data)
 # Encerrando o pré processamento
 
+# Matrix de correlação
 correlation = data.corr(numeric_only=True)
 print(correlation)
 print(data.dtypes)
@@ -46,29 +41,18 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(correlation, annot=True, cmap='coolwarm')
 plt.title('Matriz de Correlação')
 plt.show()
+# Acabou a matrix de correlação
 
-target_column = 'Global_active_power'
-features = [col for col in data.columns if col not in ['Date', target_column] and data[col].dtype != 'object']
+target = data['Global_active_power']
 
-X = data[features]
-y = data[target_column]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False) # Use shuffle=False para manter a ordem temporal
+features = data.drop(columns=['Global_active_power'])
+
+print(data, target)
 
 myPipeline = Pipeline([
     ('imputer', SimpleImputer(strategy='mean')),       
     ('scaler', MinMaxScaler()),                        
-    ('selector', SelectKBest(score_func=f_regression, k=4)),  
+    ('selector', SelectKBest(score_func=f_regression)),  
     ('model', RandomForestRegressor(random_state=42))
 ])
-
-print(X_train)
-
-myPipeline.fit(X_train, y_train)
-y_pred_rf = myPipeline.predict(X_test)
-
-mae_rf = mean_absolute_error(y_test, y_pred_rf)
-rmse_rf = np.sqrt(mean_squared_error(y_test, y_pred_rf))
-
-print(f"Random Forest - MAE: {mae_rf:.4f}")
-print(f"Random Forest - RMSE: {rmse_rf:.4f}")
 
