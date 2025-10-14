@@ -3,6 +3,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SelectKBest, f_regression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -54,21 +56,53 @@ X = data[features]
 y = data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False) # Use shuffle=False para manter a ordem temporal
 
-myPipeline = Pipeline([
+#Retirando a info de qual algoritmo será melhor para o nosso problema
+
+randomForest = Pipeline([
     ('imputer', SimpleImputer(strategy='mean')),       
     ('scaler', MinMaxScaler()),                        
     ('selector', SelectKBest(score_func=f_regression, k=4)),  
     ('model', RandomForestRegressor(random_state=42))
 ])
 
-print(X_train)
+linearRegression = Pipeline([
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('scaler', MinMaxScaler()),
+    ('selector', SelectKBest(score_func=f_regression, k=4)),
+    ('model', LinearRegression())
+])
 
-myPipeline.fit(X_train, y_train)
-y_pred_rf = myPipeline.predict(X_test)
+decisionTree = Pipeline([
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('scaler', MinMaxScaler()),
+    ('selector', SelectKBest(score_func=f_regression, k=4)),
+    ('model', DecisionTreeRegressor(random_state=42))
+])
 
-mae_rf = mean_absolute_error(y_test, y_pred_rf)
-rmse_rf = np.sqrt(mean_squared_error(y_test, y_pred_rf))
+randomForest.fit(X_train, y_train)
+y_randomForest = randomForest.predict(X_test)
+
+linearRegression.fit(X_train, y_train)
+y_linearRegression = linearRegression.predict(X_test)
+
+decisionTree.fit(X_train, y_train)
+y_decisionTree = decisionTree.predict(X_test)
+
+mae_rf = mean_absolute_error(y_test, y_randomForest)
+rmse_rf = np.sqrt(mean_squared_error(y_test, y_randomForest))
+
+mae_lr = mean_absolute_error(y_test, y_linearRegression)
+rmse_lr = np.sqrt(mean_squared_error(y_test, y_linearRegression))
+
+mae_dt = mean_absolute_error(y_test, y_decisionTree)
+rmse_dt = np.sqrt(mean_squared_error(y_test, y_decisionTree))
 
 print(f"Random Forest - MAE: {mae_rf:.4f}")
 print(f"Random Forest - RMSE: {rmse_rf:.4f}")
+
+print(f"Linear Regression - MAE: {mae_lr:.4f}")
+print(f"Linear Regression - RMSE: {rmse_lr:.4f}")
+
+print(f"Decision Tree - MAE: {mae_dt:.4f}")
+print(f"Decision Tree - RMSE: {rmse_dt:.4f}")
 
