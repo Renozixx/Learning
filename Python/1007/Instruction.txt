@@ -14,4 +14,5 @@ Apresentação -
 
 Matheus: Estudar Plot e os Algoritmos
 Luís: Estudar ao algoritmos e funções, e definir o dataset
+https://www.canva.com/design/DAG1rBAONpg/vACOPK7Rlg5ersGOzaZzpg/edit?utm_content=DAG1rBAONpg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 Renozixx: Montar a base do código e decidir as funções a utilizar
