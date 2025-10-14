@@ -1,6 +1,193 @@
-git pull -> Pega o que está na nuvem e joga na sua maquina local
-git add . -> Adiciona mudanças
-git commit -m "mensagem" -> Confirmar as mudanças adicionadas
-git push -> Envia o que foi commitado para a nuvem
+Relatório de Análise e Modelagem Preditiva de Consumo de Energia
 
-git status -> Compara o que está na sua maquina local com a maquina em nuvem
+Itrodução: 
+
+Este projeto tem como objetivo desenvolver modelos de machine learning para prever
+o consumo de energia residencial com base em dados históricos de consumo elétrico. 
+ A previsão precisa do consumo energético é crucial para otimização de recursos, 
+planejamento de geração e distribuição de energia.
+
+Objetivo:
+
+* Analisar padrões de consumo de energia residencial
+* Desenvolver modelos preditivos para Global_active_power
+* Comparar o desempenho de diferentes algoritmos de machine learning
+* Identificar o modelo mais adequado para previsão de consumo energético
+
+Metodologia:
+
+# Bibliotecas principais:
+- pandas, numpy: Manipulação de dados
+- scikit-learn: Machine Learning
+- matplotlib, seaborn: Visualização
+- Python 3.x: Linguagem de programação
+
+Abordagem:
+
+Dataset: Household Power Consumption
+
+Target: Global_active_power
+
+Modelos: Random Forest, Linear Regression, Decision Tree
+
+Métricas: MAE, RMSE, R²
+
+Validação: Train-Test Split (80-20%)
+
+Análise Exploratória:
+
+Características do Dataset
+# Código para análise inicial
+print("Dimensões do dataset:", data.shape)
+print("\nTipos de dados:")
+print(data.dtypes)
+print("\nEstatísticas descritivas:")
+print(data.describe())
+
+Matriz de Correlação:
+A matriz de correlação revela as relações lineares entre as variáveis, identificando quais
+features têm maior influência no consumo de energia.
+
+https://correlation_matrix.png
+
+Pré-processamento:
+
+Transformações Aplicadas:
+# 1. Codificação de variável temporal
+data['Time'], indexes = pd.factorize(data['Time'])
+
+# 2. Conversão para numérico
+cols_object = [
+    'Global_active_power', 'Global_reactive_power', 'Voltage',
+    'Global_intensity', 'Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'
+]
+for col in cols_object:
+    data[col] = pd.to_numeric(data[col], errors='coerce')
+
+# 3. Tratamento de valores missing
+data['Global_active_power'] = data['Global_active_power'].fillna(data['Global_active_power'].mean())
+
+Pipeline de Processamento:
+# Pipeline comum para todos os modelos
+pipeline_steps = [
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('scaler', MinMaxScaler()),
+    ('selector', SelectKBest(score_func=f_regression, k=4)),
+    ('model', None)  # Preenchido com cada algoritmo
+]
+
+Modelagem:
+
+Algoritmos Implementados
+1. Random Forest Regressor
+Vantagens: Robustez a outliers, captura relações não-lineares
+
+Hiperparâmetros: random_state=42
+
+2. Linear Regression
+Vantagens: Simplicidade, interpretabilidade
+
+Pressupostos: Linearidade, normalidade dos resíduos
+
+3. Decision Tree Regressor
+Vantagens: Não-paramétrico, fácil interpretação
+
+Hiperparâmetros: random_state=42
+
+Divisão dos Dados:
+
+# Features selecionadas (excluindo Date e target)
+features = [col for col in data.columns if col not in ['Date', target_column] and data[col].dtype != 'object']
+
+X = data[features]
+y = data[target_column]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+Resultados:
+
+Métricas de Desempenho
+Modelo	                MAE 	         RMSE	        R²
+Random Forest	    {mae_rf:.4f}	{rmse_rf:.4f}	{r2_rf:.4f}
+Linear Regression	{mae_lr:.4f}	{rmse_lr:.4f}	{r2_lr:.4f}
+Decision Tree	    {mae_dt:.4f}	{rmse_dt:.4f}	{r2_dt:.4f}
+
+Análise Visual dos Resultados
+Gráficos Individuais por Modelo
+Random Forest:
+https://random_forest_metrics.png
+
+Linear Regression:
+https://linear_regression_metrics.png
+
+Decision Tree:
+https://decision_tree_metrics.png
+
+Gráficos Comparativos
+Comparação do MAE:
+https://comparacao_mae.png
+
+Comparação do RMSE:
+https://comparacao_rmse.png
+
+Comparação do R²:
+https://comparacao_r2.png
+
+Interpretação das Métricas:
+
+* MAE (Mean Absolute Error): Erro absoluto médio (quanto menor, melhor)
+
+* RMSE (Root Mean Square Error): Erro quadrático médio (mais sensível a outliers)
+
+* R² (Coeficiente de Determinação): Proporção da variância explicada (0-1, quanto maior melhor)
+
+Conclusão:
+
+Baseado nas métricas obtidas:
+
+🎖️ Melhor Modelo: {modelo_vencedor}
+
+Justificativa: Apresentou o menor MAE/RMSE e maior R²
+
+📊 Ranking de Performance:
+
+{primeiro_lugar} - {justificativa_primeiro}
+{segundo_lugar} - {justificativa_segundo}
+{terceiro_lugar} - {justificativa_terceiro}
+
+Insights Obtidos
+
+Fatores mais influentes: [Baseado na matriz de correlação]
+Complexidade vs Performance: [Análise trade-off]
+Adequação do problema: [Linear vs Não-linear]
+Limitações e Melhorias Futuras
+
+Limitações:
+
+Tamanho do dataset
+Variáveis temporais não totalmente exploradas
+Possível estacionariedade não tratada
+
+Melhorias Sugeridas:
+
+# 1. Engenharia de features temporais
+data['Hour'] = pd.to_datetime(data['Time']).dt.hour
+data['DayOfWeek'] = pd.to_datetime(data['Date']).dt.dayofweek
+
+# 2. Modelos adicionais
+- XGBoost, Gradient Boosting
+- Redes Neurais
+- SARIMA (para componente temporal)
+
+# 3. Validação cruzada temporal
+from sklearn.model_selection import TimeSeriesSplit
+
+Referências:
+Dataset: Household Power Consumption
+
+Scikit-learn Documentation
+
+Python Machine Learning Cookbook
+
+Data de Geração: {data_actual}
+Autor: Sistema de Análise Automática
+Versão: 1.0
