@@ -9,11 +9,11 @@ from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import numpy as np
 
 # data = pd.read_csv('household_power_consumption.csv') # Luis
-data = pd.read_csv('Python\\1007\\household_power_consumption.csv', sep=';', index_col=None) # Vinicius
+data = pd.read_csv('Python\\1007\\household_power_consumption.csv', index_col=None) # Vinicius
 
 print(data)
 
@@ -90,19 +90,25 @@ y_decisionTree = decisionTree.predict(X_test)
 
 mae_rf = mean_absolute_error(y_test, y_randomForest)
 rmse_rf = np.sqrt(mean_squared_error(y_test, y_randomForest))
+r2_rf = np.sqrt(r2_score(y_test, y_randomForest))
 
 mae_lr = mean_absolute_error(y_test, y_linearRegression)
 rmse_lr = np.sqrt(mean_squared_error(y_test, y_linearRegression))
+r2_lr = np.sqrt(r2_score(y_test, y_linearRegression))
 
 mae_dt = mean_absolute_error(y_test, y_decisionTree)
 rmse_dt = np.sqrt(mean_squared_error(y_test, y_decisionTree))
+r2_dt = np.sqrt(r2_score(y_test, y_decisionTree))
 
 print(f"Random Forest - MAE: {mae_rf:.4f}")
 print(f"Random Forest - RMSE: {rmse_rf:.4f}")
+print(f"Random Forest - R²: {r2_rf:.4f}")
 
 print(f"Linear Regression - MAE: {mae_lr:.4f}")
 print(f"Linear Regression - RMSE: {rmse_lr:.4f}")
+print(f"Linear Regression - R²: {r2_lr:.4f}")
 
 print(f"Decision Tree - MAE: {mae_dt:.4f}")
 print(f"Decision Tree - RMSE: {rmse_dt:.4f}")
+print(f"Decision Tree - R²: {r2_dt:.4f}")
 
