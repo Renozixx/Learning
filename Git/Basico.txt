@@ -1,0 +1,6 @@
+git pull -> Pega o que está na nuvem e joga na sua maquina local
+git add . -> Adiciona mudanças
+git commit -m "mensagem" -> Confirmar as mudanças adicionadas
+git push -> Envia o que foi commitado para a nuvem
+
+git status -> Compara o que está na sua maquina local com a maquina em nuvem
