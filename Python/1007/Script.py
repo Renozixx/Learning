@@ -90,15 +90,15 @@ y_decisionTree = decisionTree.predict(X_test)
 
 mae_rf = mean_absolute_error(y_test, y_randomForest)
 rmse_rf = np.sqrt(mean_squared_error(y_test, y_randomForest))
-r2_rf = np.sqrt(r2_score(y_test, y_randomForest))
+r2_rf = r2_score(y_test, y_randomForest)
 
 mae_lr = mean_absolute_error(y_test, y_linearRegression)
 rmse_lr = np.sqrt(mean_squared_error(y_test, y_linearRegression))
-r2_lr = np.sqrt(r2_score(y_test, y_linearRegression))
+r2_lr = r2_score(y_test, y_linearRegression)
 
 mae_dt = mean_absolute_error(y_test, y_decisionTree)
 rmse_dt = np.sqrt(mean_squared_error(y_test, y_decisionTree))
-r2_dt = np.sqrt(r2_score(y_test, y_decisionTree))
+r2_dt = r2_score(y_test, y_decisionTree)
 
 print(f"Random Forest - MAE: {mae_rf:.4f}")
 print(f"Random Forest - RMSE: {rmse_rf:.4f}")
