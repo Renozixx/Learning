@@ -104,3 +104,63 @@ plt.xlabel('Erro de Predição')
 plt.ylabel('Frequência')
 plt.title('Distribuição dos Erros de Predição')
 plt.show()
+
+# Gráfico combinado
+x = np.arange(len(modelos))
+width = 0.25
+
+fig, ax = plt.subplots(figsize=(10, 6))
+rects1 = ax.bar(x - width, mae_values, width, label='MAE', color='red')
+rects2 = ax.bar(x, rmse_values, width, label='RMSE', color='blue')
+rects3 = ax.bar(x + width, r2_values, width, label='R²', color='green')
+
+ax.set_ylabel('Scores')
+ax.set_title('Comparação de Métricas por Modelo')
+ax.set_xticks(x)
+ax.set_xticklabels(modelos)
+ax.legend()
+
+import matplotlib.pyplot as plt
+
+# Gráfico 1: Random Forest
+plt.figure(figsize=(8, 6))
+metricas_rf = ['MAE', 'RMSE', 'R²']
+valores_rf = [mae_rf, rmse_rf, r2_rf]
+cores_rf = ['red', 'blue', 'green']
+
+plt.bar(metricas_rf, valores_rf, color=cores_rf)
+plt.title('Random Forest - Métricas de Desempenho')
+plt.ylabel('Valores')
+for i, v in enumerate(valores_rf):
+    plt.text(i, v, f'{v:.4f}', ha='center', va='bottom')
+plt.show()
+
+# Gráfico 2: Linear Regression
+plt.figure(figsize=(8, 6))
+metricas_lr = ['MAE', 'RMSE', 'R²']
+valores_lr = [mae_lr, rmse_lr, r2_lr]
+cores_lr = ['red', 'blue', 'green']
+
+plt.bar(metricas_lr, valores_lr, color=cores_lr)
+plt.title('Linear Regression - Métricas de Desempenho')
+plt.ylabel('Valores')
+for i, v in enumerate(valores_lr):
+    plt.text(i, v, f'{v:.4f}', ha='center', va='bottom')
+plt.show()
+
+# Gráfico 3: Decision Tree
+plt.figure(figsize=(8, 6))
+metricas_dt = ['MAE', 'RMSE', 'R²']
+valores_dt = [mae_dt, rmse_dt, r2_dt]
+cores_dt = ['red', 'blue', 'green']
+
+plt.bar(metricas_dt, valores_dt, color=cores_dt)
+plt.title('Decision Tree - Métricas de Desempenho')
+plt.ylabel('Valores')
+for i, v in enumerate(valores_dt):
+    plt.text(i, v, f'{v:.4f}', ha='center', va='bottom')
+plt.show()
+
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
