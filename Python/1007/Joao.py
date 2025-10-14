@@ -161,6 +161,7 @@ for i, v in enumerate(valores_dt):
     plt.text(i, v, f'{v:.4f}', ha='center', va='bottom')
 plt.show()
 
+
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
