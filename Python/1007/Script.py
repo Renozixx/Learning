@@ -3,9 +3,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SelectKBest, f_regression
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
@@ -72,11 +71,15 @@ linearRegression = Pipeline([
     ('model', LinearRegression())
 ])
 
-decisionTree = Pipeline([
+gradientBoost = Pipeline([
     ('imputer', SimpleImputer(strategy='mean')),
     ('scaler', MinMaxScaler()),
     ('selector', SelectKBest(score_func=f_regression, k=4)),
-    ('model', DecisionTreeRegressor(random_state=42))
+    ('model', GradientBoostingRegressor(
+    n_estimators=100,     # número de árvores
+    learning_rate=0.1,    # taxa de aprendizado
+    max_depth=3,          # profundidade das árvores (indiretamente, via base_estimator)
+    random_state=42))
 ])
 
 randomForest.fit(X_train, y_train)
@@ -85,8 +88,8 @@ y_randomForest = randomForest.predict(X_test)
 linearRegression.fit(X_train, y_train)
 y_linearRegression = linearRegression.predict(X_test)
 
-decisionTree.fit(X_train, y_train)
-y_decisionTree = decisionTree.predict(X_test)
+gradientBoost.fit(X_train, y_train)
+y_gradientBoost = gradientBoost.predict(X_test)
 
 mae_rf = mean_absolute_error(y_test, y_randomForest)
 rmse_rf = np.sqrt(mean_squared_error(y_test, y_randomForest))
@@ -96,9 +99,13 @@ mae_lr = mean_absolute_error(y_test, y_linearRegression)
 rmse_lr = np.sqrt(mean_squared_error(y_test, y_linearRegression))
 r2_lr = r2_score(y_test, y_linearRegression)
 
-mae_dt = mean_absolute_error(y_test, y_decisionTree)
-rmse_dt = np.sqrt(mean_squared_error(y_test, y_decisionTree))
-r2_dt = r2_score(y_test, y_decisionTree)
+mae_gb = mean_absolute_error(y_test, y_gradientBoost)
+rmse_gb = np.sqrt(mean_squared_error(y_test, y_gradientBoost))
+r2_gb = r2_score(y_test, y_gradientBoost)
+
+# RMSE -> Quanto menor melhor
+# MAE -> Quanto menor melhor
+# R² -> Quanto maior melhor, limite em 1
 
 print(f"Random Forest - MAE: {mae_rf:.4f}")
 print(f"Random Forest - RMSE: {rmse_rf:.4f}")
@@ -108,7 +115,23 @@ print(f"Linear Regression - MAE: {mae_lr:.4f}")
 print(f"Linear Regression - RMSE: {rmse_lr:.4f}")
 print(f"Linear Regression - R²: {r2_lr:.4f}")
 
-print(f"Decision Tree - MAE: {mae_dt:.4f}")
-print(f"Decision Tree - RMSE: {rmse_dt:.4f}")
-print(f"Decision Tree - R²: {r2_dt:.4f}")
+print(f"Gradient Boosting Regressor - MAE: {mae_gb:.4f}")
+print(f"Gradient Boosting Regressor - RMSE: {rmse_gb:.4f}")
+print(f"Gradient Boosting Regressor - R²: {r2_gb:.4f}")
 
+
+myPipeline = randomForest
+
+prev1 = randomForest.predict([
+    [4, 0.502, 233.740, 23.000, 0.000, 1.000, 17.000],
+    [4, 0.502, 233.740, 18.000, 0.000, 1.000, 17.000],
+    [4, 0.502, 233.740, 13.000, 0.000, 1.000, 17.000]
+])
+
+prev2 = gradientBoost.predict([
+    [4, 0.502, 233.740, 23.000, 0.000, 1.000, 17.000],
+    [4, 0.502, 233.740, 18.000, 0.000, 1.000, 17.000],
+    [4, 0.502, 233.740, 13.000, 0.000, 1.000, 17.000]
+])
+
+print(prev1, prev2)
