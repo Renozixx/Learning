@@ -3,6 +3,8 @@ using namespace std;
 
 #define MAXN 100000
 
+// Este código não está funcional, nao se basear nele para estudos
+
 long long stars[MAXN][2];
 
 long long euclidian(long long x[2], long long y[2]){

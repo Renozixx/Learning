@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define MOD 1000000007
+#define MOD     1000000007
 
 int main(){
     unsigned long long ans = 1; 
@@ -10,16 +10,12 @@ int main(){
 
     cin >> n;
 
-    cout << n << endl;
-
-    for(int i = 1; i < n; i++){ 
-        cout << ans << endl;
+    for(int i = 0; i < n; i++)
+    {
         ans *= 2;
-        ans %= MOD;
+        ans = ans % MOD;
     }
-
-    cout << ans << endl;
-
+    
     cout << ans % MOD << endl;
     return 0;
 }
