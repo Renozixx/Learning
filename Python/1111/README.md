@@ -1,6 +1,6 @@
-# Avaliação Semestral - 
+# Avaliação Semestral
 
-## Orientações Globais -
+## Orientações Globais
 ### 1. Entregáveis e Rubricas
     - Proposta
         * Problema, objetivos, dados, riscos, cronograma, refs iniciais.
