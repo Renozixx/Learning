@@ -6,6 +6,9 @@
         * Problema, objetivos, dados, riscos, cronograma, refs iniciais.
 
     - EDA + Baseline
+        Significado - Por meio de um video no youtube vi que o EDA (Exploratory Data Analysis) seria o estudo do 
+        dataset selecionado, tal qual quais passos foram feitos por ele até prepara-lo para uso.
+        
         * Limpeza, feature engineering inicial, split treino/val.
         * Diagrama de blocos(completo): incluir caminhos de dados, etapas do pré-processamento e ponto de entrada do algoritmo.
     
@@ -57,3 +60,6 @@ Algoritmos foco: IsolationForest, OneClassSVM.
 Aplicação: detecção de anomalias em séries de sensores (energia, vibração, vazão).
 Extras: windowing para features temporais, taxa de falsos positivos, interpretação.
 Datasets ideias: medidores inteligentes, telemetria, logs operacionais.
+
+### Links Importantes
+Canva: https://www.canva.com/design/DAG5cnKZktY/S-MejESpBOAHIVNp1gdsiA/edit?utm_content=DAG5cnKZktY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
