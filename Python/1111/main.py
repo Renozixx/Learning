@@ -8,6 +8,7 @@ from sklearn.ensemble import IsolationForest
 import seaborn as sns
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 from sklearn.model_selection import train_test_split
+from sklearn.svm import OneClassSVM
 
 print("Hello world")
 # Pensando em Introduzir o Conceito de .env para vocês vou utilizar isso no nosso problema
@@ -20,23 +21,17 @@ print(FILE_PATH)
 # Dataset disponível dentro do link do README
 df = pd.read_csv(FILE_PATH)
 
-df = df[df['machine_status'] != 'BROKEN']
-
-
-df = df.drop(columns=['sensor_51', 'sensor_50', 'sensor_15', 'sensor_08', 'sensor_00', 'sensor_07', 'sensor_06', 'sensor_09'])
-
-nan_por_coluna = df.isnull().sum()
-print(nan_por_coluna)
-
 counts = df.groupby('machine_status').size()
 print(counts)
+
+df = df.drop(columns=['sensor_51', 'sensor_50', 'sensor_15', 'sensor_08', 'sensor_00', 'sensor_07', 'sensor_06', 'sensor_09'])
 
 df = df.dropna()
 
 counts = df.groupby('machine_status').size()
 print(counts)
 
-df["machine_status"] = df["machine_status"].replace({"NORMAL": 1, "RECOVERING": -1})
+df["machine_status"] = df["machine_status"].replace({"NORMAL": 1, "RECOVERING": -1, "BROKEN": -1})
 
 corr = df.corrwith(df['machine_status'], numeric_only=True)
 # 2. Plota o heatmap da correlação
@@ -54,6 +49,8 @@ FEATS = df.drop(columns=['machine_status', 'timestamp', 'id'])
 
 Feats_train, Feats_test, y_train, y_test = train_test_split(FEATS, Y, test_size=0.3, random_state=42)
 
+print("Começando Isolation")
+
 iso = IsolationForest(
     n_estimators=1000,
     contamination=0.135,
@@ -62,20 +59,30 @@ iso = IsolationForest(
     random_state=15
 )
 
-iso.fit(FEATS, Y)
+iso.fit(Feats_train)
 
-y_pred = iso.predict(FEATS)
+y_pred = iso.predict(Feats_test)
+print("Finalizando Isolation")
 
-# Também pode pegar uma "pontuação de anomalia": quanto menor, mais anômalo
-scores = iso.decision_function(FEATS)
+print("Começando One Class")
+
+ocsvm = OneClassSVM(
+    nu=0.01,
+    kernel="rbf", 
+    gamma="scale"
+)
+ocsvm.fit(Feats_train)
+
+y_pred_svm = ocsvm.predict(Feats_test)
+
+print("Finalizando One Class")
 
 plt.figure(figsize=(12, 6))
 
-# Plota a linha do valor real
-plt.plot(Y, label="Real (machine_status)", color="red", linestyle="-")
 
-# Plota a linha da previsão
+plt.plot(y_test, label="Real (machine_status)", color="red", linestyle="-")
 plt.plot(y_pred, label="Previsto (Isolation Forest)", color="yellow", linestyle="--")
+plt.plot(y_pred_svm, label="Previsto SVM", linestyle='-.', color='blue')
 
 plt.xlabel("Índice das instâncias")
 plt.ylabel("Status (1 = NORMAL, -1 = ANOMALIA)")
@@ -87,7 +94,7 @@ plt.grid(True)
 plt.show()
 
 # calcula a matriz de confusão
-cm = confusion_matrix(Y, y_pred, labels=[1, -1])  # ajuste os labels conforme suas classes
+cm = confusion_matrix(y_test, y_pred, labels=[1, -1])  # ajuste os labels conforme suas classes
 
 # plot usando seaborn
 plt.figure(figsize=(6, 5))
@@ -97,4 +104,16 @@ plt.ylabel("Real")
 plt.title("Matriz de Confusão")
 plt.show()
 
-print(classification_report(Y, y_pred, labels=[1, -1]))
+
+# calcula a matriz de confusão
+cm = confusion_matrix(y_test, y_pred_svm, labels=[1, -1])  # ajuste os labels conforme suas classes
+
+# plot usando seaborn
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=["NORMAL Previsto", "RECOVERING Previsto"], yticklabels=["NORMAL Real", "RECOVERING Real"])
+plt.xlabel("Previsão")
+plt.ylabel("Real")
+plt.title("Matriz de Confusão")
+plt.show()
+
+print(classification_report(y_test, y_pred, labels=[1, -1]))
